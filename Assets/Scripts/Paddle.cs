@@ -11,14 +11,24 @@ public class Paddle : MonoBehaviour {
     int right = 28;
     Rigidbody2D rb;
 
+    float dx;
+
+    public Ball ball;
 
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void FixedUpdate() {
+        rb.velocity = Vector2.right * dx;
+    }
+
+    void Update() {
+        if ((CrossPlatformInputManager.GetButtonDown("Fire1") || CrossPlatformInputManager.GetButtonDown("Jump")) && ball && !ball.IsInPlay()) {
+            ball.Launch();
+        }
+
         if (useMouse) {
             ProcessMouseInput();
         } else {
@@ -28,29 +38,27 @@ public class Paddle : MonoBehaviour {
 
     void ProcessMouseInput() {
         float x = (CrossPlatformInputManager.mousePosition.x / Screen.width * (right - left) + left);
-        float dx = x - transform.position.x;
+        dx = Mathf.Sign(x - transform.position.x) * mouseVelocity;
         if (x < left) {
             transform.position = new Vector2(left, transform.position.y);
-            rb.velocity = Vector2.zero;
+            dx = 0;
         } else if (x > right) {
             transform.position = new Vector2(right, transform.position.y);
-            rb.velocity = Vector2.zero;
-        } else if (Mathf.Abs(dx) < 5f) {
+            dx = 0;
+        } else if (Mathf.Abs(x - transform.position.x) < 5f) {
             transform.position = new Vector2(x, transform.position.y);
-            rb.velocity = Vector2.zero;
-        } else {
-            rb.velocity = Vector2.right * Mathf.Sign(dx) * mouseVelocity;
+            dx = 0;
         }
     }
 
     void ProcessOtherInput() {
         float multiplier = 1f;
-        if (CrossPlatformInputManager.GetButton("Fire1")) {
+        if (CrossPlatformInputManager.GetButton("Fire2")) {
             multiplier = 2f;
         } else if (CrossPlatformInputManager.GetButton("Fire3")) {
             multiplier = 0.5f;
         }
-        float dx = CrossPlatformInputManager.GetAxis("Horizontal") * paddleVelocity * multiplier;
+        dx = CrossPlatformInputManager.GetAxis("Horizontal") * paddleVelocity * multiplier;
         if (transform.position.x < left) {
             transform.position = new Vector2(left, transform.position.y);
             dx = 0;
@@ -58,8 +66,6 @@ public class Paddle : MonoBehaviour {
             transform.position = new Vector2(right, transform.position.y);
             dx = 0;
         }
-
-        rb.velocity = Vector2.right * dx;
     }
 
 }
