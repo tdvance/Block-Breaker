@@ -8,13 +8,28 @@ public class LevelManager : MonoBehaviour {
 
     public static int current_level = 0;
 
+    public static int numBricks = -1;
+
     public static Texture[] backgrounds = null;
 
+    public static Texture2D[] levels = null;
+
     void Start() {
+        if (numBricks == 0) {
+            numBricks = -1;
+        }
         musicManager = FindObjectOfType<FlexibleMusicManager>();
         if (backgrounds == null) {
             backgrounds = Resources.LoadAll<Texture>("Backgrounds");
         }
+
+        if(levels == null) {
+            levels = Resources.LoadAll<Texture2D>("Levels");
+        }
+    }
+
+    public void LevelUp() {
+        LoadLevel("Level_01");
     }
 
     public void LoadLevel(string name) {

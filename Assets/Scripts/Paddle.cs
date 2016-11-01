@@ -7,13 +7,13 @@ public class Paddle : MonoBehaviour {
     public bool useMouse = true;
     public float paddleVelocity = 50f;
     public float mouseVelocity = 100f;
-    int left = -28;
-    int right = 28;
+    int left = -30;
+    int right = 30;
     Rigidbody2D rb;
 
     float dx;
 
-    public Ball ball;
+    internal Ball ball;
 
     // Use this for initialization
     void Start() {

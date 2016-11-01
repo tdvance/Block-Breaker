@@ -13,10 +13,10 @@ public class Ball : MonoBehaviour {
     int right = 32;
     int top = 18;
     int bottom = -18;
-    float minXVelocity = -75;
-    float maxXVelocity = 75;
-    float minYVelocity = -75;
-    float maxYVelocity = 75;
+    float minXVelocity = -30;
+    float maxXVelocity = 30;
+    float minYVelocity = -20;
+    float maxYVelocity = 20;
 
     private bool inPlay = false;
 
@@ -34,6 +34,9 @@ public class Ball : MonoBehaviour {
     void Update() {
 
         if (inPlay) {
+            if(rb.velocity.magnitude < 14) {
+                rb.velocity *= 1.5f;
+            }
             if (transform.position.y < bottom - 10) {
                 FindObjectOfType<LevelManager>().LoadLevel("Lose Screen");
             } else if (transform.position.y > top) {
