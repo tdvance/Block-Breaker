@@ -94,8 +94,8 @@ public class BrickBuilder : MonoBehaviour {
     }
 
     public GameObject MakeBrick(float x, float y, Color color, int type) {
-        Debug.Log("Making brick: " + color + ", " + type);
-        GameObject brick = Instantiate(brickPrefabs[type], new Vector3(x, y), Quaternion.identity) as GameObject;
+        //Debug.Log("Making brick: " + color + ", " + type);
+        GameObject brick = Instantiate(brickPrefabs[type], new Vector3(x, y, 0), Quaternion.identity) as GameObject;
         brick.transform.SetParent(gameObject.transform);
         brick.GetComponent<SpriteRenderer>().color = color;
         return brick;

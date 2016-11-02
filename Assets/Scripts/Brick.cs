@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class Brick : MonoBehaviour {
+
+    public Sprite[] hitSprites;
+
     public int maxHits = 1;
 
     private int timesHit = 0;
@@ -25,6 +28,8 @@ public class Brick : MonoBehaviour {
                 if (LevelManager.numBricks <= 0) {
                     FindObjectOfType<LevelManager>().LevelUp();
                 }
+            }else {
+               GetComponent<SpriteRenderer>().sprite = hitSprites[timesHit];
             }
         }
     }

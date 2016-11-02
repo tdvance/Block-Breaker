@@ -29,6 +29,8 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void LevelUp() {
+        SaveStatistics("Level_" + current_level);
+        StatisticsManager.instance.LogStats("Level_" + current_level + ".time");
         LoadLevel("Level_01");
     }
 
@@ -55,6 +57,8 @@ public class LevelManager : MonoBehaviour {
     }
 
     
-
+    private void SaveStatistics(string prefix) {
+        StatisticsManager.instance.AddValue(Time.timeSinceLevelLoad, prefix + ".time");
+    }
 
 }

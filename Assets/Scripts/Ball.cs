@@ -17,6 +17,9 @@ public class Ball : MonoBehaviour {
     float maxXVelocity = 30;
     float minYVelocity = -20;
     float maxYVelocity = 20;
+    float minVelocityMag = 14f;
+    float minXMag = 5;
+    float minYMag = 5;
 
     private bool inPlay = false;
 
@@ -34,10 +37,14 @@ public class Ball : MonoBehaviour {
     void Update() {
 
         if (inPlay) {
-            if(rb.velocity.magnitude < 14) {
+            if (rb.velocity.magnitude < minVelocityMag) {
                 rb.velocity *= 1.5f;
+            } else if (rb.velocity.x < minXMag && rb.velocity.x > -minXMag) {
+                rb.velocity = new Vector2(rb.velocity.x * 1.5f, 0.5f + rb.velocity.y);
+            } else if (rb.velocity.y < minYMag && rb.velocity.y > -minYMag) {
+                rb.velocity = new Vector2(rb.velocity.x, 0.5f + rb.velocity.y * 1.5f);
             }
-            if (transform.position.y < bottom - 10) {
+            if (transform.position.y < bottom - 2) {
                 FindObjectOfType<LevelManager>().LoadLevel("Lose Screen");
             } else if (transform.position.y > top) {
                 rb.velocity = new Vector2(rb.velocity.x, -Mathf.Abs(rb.velocity.y));

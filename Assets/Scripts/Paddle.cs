@@ -4,6 +4,9 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Paddle : MonoBehaviour {
 
+    public bool autoPlay = true;
+    public float autoPlayFudge = 0.5f;
+
     public bool useMouse = true;
     public float paddleVelocity = 50f;
     public float mouseVelocity = 100f;
@@ -27,12 +30,30 @@ public class Paddle : MonoBehaviour {
     void Update() {
         if ((CrossPlatformInputManager.GetButtonDown("Fire1") || CrossPlatformInputManager.GetButtonDown("Jump")) && ball && !ball.IsInPlay()) {
             ball.Launch();
+        } if(autoPlay && !ball.IsInPlay()) {
+            ball.Launch();
         }
-
-        if (useMouse) {
+        if (autoPlay) {
+            ProcessAutoInput();
+        } else if (useMouse) {
             ProcessMouseInput();
         } else {
             ProcessOtherInput();
+        }
+    }
+
+    void ProcessAutoInput() {
+        float x = ball.transform.position.x;
+        dx = Mathf.Sign(x - transform.position.x) * mouseVelocity;
+        if (x < left) {
+            transform.position = new Vector2(left, transform.position.y);
+            dx = 0;
+        } else if (x > right) {
+            transform.position = new Vector2(right, transform.position.y);
+            dx = 0;
+        } else if (Mathf.Abs(x - transform.position.x) < 5f) {
+            transform.position = new Vector2(x, transform.position.y);
+            dx = 0;
         }
     }
 
