@@ -17,13 +17,32 @@ public class BrickBuilder : MonoBehaviour {
 
     public List<Color> brickColors = new List<Color>();
 
+    public static float widthMultiplier;
+    public static float heightMultiplier;
+
+    Vector3 brickScale;
 
     // Use this for initialization
     void Start() {
+
+        widthMultiplier = (float)Screen.width / 1340f;
+        heightMultiplier = (float)Screen.height / 754f;
+
+        left *= widthMultiplier;
+        right *= widthMultiplier;
+        top *= heightMultiplier;
+        bottom *= heightMultiplier;
+        width *= widthMultiplier;
+        height *= heightMultiplier;
+
+        brickScale = new Vector3(widthMultiplier, heightMultiplier, 1);
+
         int level = LevelManager.current_level;
         int iteration = (level + LevelManager.levels.Length - 1) / LevelManager.levels.Length;
         Texture2D texture = LevelManager.levels[(level + LevelManager.levels.Length - 1) % LevelManager.levels.Length];
         LevelManager.numBricks = MakeBricks(texture, iteration);
+
+
     }
 
     public int MakeBricks(Texture2D texture, int iteration) {
@@ -72,8 +91,26 @@ public class BrickBuilder : MonoBehaviour {
     }
 
     public float ColorDistance(Color a, Color b) {
-        return (a.r - b.r) * (a.r - b.r) + (a.g - b.g) * (a.g - b.g) + (a.b - b.b) * (a.b - b.b);
+        float h1, s1, v1;
+        float h2, s2, v2;
 
+        Color.RGBToHSV(a, out h1, out s1, out v1);
+        Color.RGBToHSV(b, out h2, out s2, out v2);
+
+        float ds = (s1 - s2);
+
+        return CircularDistance(h1, h2) * (2 * ds * ds - 2 * ds + 1) + 0.1f * Mathf.Abs(v1 - v2) + 0.05f * Mathf.Abs(ds);
+    }
+
+    float CircularDistance(float a, float b) {
+        float d = a - b;
+        if (d < 0) {
+            d = -d;
+        }
+        if (1 - d < d) {
+            d = 1 - d;
+        }
+        return d;
     }
 
     public void Fill() {
@@ -98,6 +135,12 @@ public class BrickBuilder : MonoBehaviour {
         GameObject brick = Instantiate(brickPrefabs[type], new Vector3(x, y, 0), Quaternion.identity) as GameObject;
         brick.transform.SetParent(gameObject.transform);
         brick.GetComponent<SpriteRenderer>().color = color;
+        //Debug.Log("before scale: " + brick.transform.localScale);
+        //Debug.Log("changing to: " + brickScale);
+
+        brick.transform.localScale = brickScale;
+        //Debug.Log("after scale: " + brick.transform.localScale);
+
         return brick;
     }
 

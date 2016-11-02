@@ -10,8 +10,8 @@ public class Paddle : MonoBehaviour {
     public bool useMouse = true;
     public float paddleVelocity = 50f;
     public float mouseVelocity = 100f;
-    int left = -30;
-    int right = 30;
+    float left = -30;
+    float right = 30;
     Rigidbody2D rb;
 
     float dx;
@@ -20,6 +20,12 @@ public class Paddle : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        float widthMultiplier = (float)Screen.width / 1340f;
+        float heightMultiplier = (float)Screen.height / 754f;
+        left *= widthMultiplier;
+        right *= widthMultiplier;
+        transform.localScale = new Vector3(widthMultiplier, heightMultiplier, 1);
+       
         rb = GetComponent<Rigidbody2D>();
     }
 
