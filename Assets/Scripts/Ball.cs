@@ -34,8 +34,6 @@ public class Ball : MonoBehaviour {
         top *= heightMultiplier;
         bottom *= heightMultiplier;
        
-
-
         rb = GetComponent<Rigidbody2D>();
         paddle = GameObject.Find("Paddle");
         paddle.GetComponent<Paddle>().ball = this;
@@ -87,5 +85,11 @@ public class Ball : MonoBehaviour {
         return inPlay;
     }
 
+    void OnCollisionEnter2D(Collision2D collision) {
+        if (inPlay) {
+            GetComponent<AudioSource>().Play();
+        }
+    }
 
-}
+
+    }

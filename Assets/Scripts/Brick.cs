@@ -23,6 +23,7 @@ public class Brick : MonoBehaviour {
         if (collision.gameObject.GetComponent<Ball>()) {
             timesHit++;
             if (timesHit >= maxHits) {
+                AudioSource.PlayClipAtPoint(GetComponent<AudioSource>().clip, Vector3.zero);
                 Destroy(gameObject);
                 LevelManager.numBricks--;
                 if (LevelManager.numBricks <= 0) {
