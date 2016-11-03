@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour {
     float minYMag = 5;
 
     private bool inPlay = false;
+    private bool readyToPlay = false;
 
     Rigidbody2D rb;
 
@@ -33,11 +34,17 @@ public class Ball : MonoBehaviour {
         right *= widthMultiplier;
         top *= heightMultiplier;
         bottom *= heightMultiplier;
-       
+
         rb = GetComponent<Rigidbody2D>();
         paddle = GameObject.Find("Paddle");
         paddle.GetComponent<Paddle>().ball = this;
         paddleToBallVector = transform.position - paddle.transform.position;
+        readyToPlay = true;
+    }
+    public void Stop() {
+        inPlay = false;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0f;
     }
 
     // Update is called once per frame
@@ -52,13 +59,20 @@ public class Ball : MonoBehaviour {
                 rb.velocity = new Vector2(rb.velocity.x, 0.5f + rb.velocity.y * 1.5f);
             }
             if (transform.position.y < bottom - 2) {
-                FindObjectOfType<LevelManager>().LoadLevel("Lose Screen");
+                if (inPlay) {
+                    SoundFXManager.instance.play(1);
+                    inPlay = false;
+                    Invoke("LoadLoseScreen", 1f);
+                }
             } else if (transform.position.y > top) {
                 rb.velocity = new Vector2(rb.velocity.x, -Mathf.Abs(rb.velocity.y));
+                SoundFXManager.instance.play(2);
             }
             if (transform.position.x > right) {
+                SoundFXManager.instance.play(2);
                 rb.velocity = new Vector2(-Mathf.Abs(rb.velocity.x), rb.velocity.y);
             } else if (transform.position.x < left) {
+                SoundFXManager.instance.play(2);
                 rb.velocity = new Vector2(Mathf.Abs(rb.velocity.x), rb.velocity.y);
             }
             if (rb.velocity.x < minXVelocity) {
@@ -76,9 +90,16 @@ public class Ball : MonoBehaviour {
         }
     }
 
+    void LoadLoseScreen() {
+        FindObjectOfType<LevelManager>().LoadLevel("Lose Screen");
+    }
+
     public void Launch() {
-        inPlay = true;
-        rb.velocity = startVelocity;
+        if (!inPlay && readyToPlay) {
+            inPlay = true;
+            rb.velocity = startVelocity;
+            readyToPlay = false;
+        }
     }
 
     public bool IsInPlay() {
@@ -87,9 +108,9 @@ public class Ball : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision) {
         if (inPlay) {
-            GetComponent<AudioSource>().Play();
+            SoundFXManager.instance.play(2);
         }
     }
 
 
-    }
+}

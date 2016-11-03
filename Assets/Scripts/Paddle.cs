@@ -4,7 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Paddle : MonoBehaviour {
 
-    public bool autoPlay = true;
+    public bool autoPlay = false;
     public float autoPlayFudge = 0.5f;
 
     public bool useMouse = true;

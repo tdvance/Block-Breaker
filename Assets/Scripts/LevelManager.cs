@@ -28,9 +28,19 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
+    public void StartGame() {
+        ScoreManager.instance.Reset();
+        LoadLevel("Level_01");
+    }
+
     public void LevelUp() {
+        SoundFXManager.instance.play(0);
         SaveStatistics("Level_" + current_level);
         StatisticsManager.instance.LogStats("Level_" + current_level + ".time");
+        Invoke("LoadNextLevel", 1f);
+    }
+
+    void LoadNextLevel() {
         LoadLevel("Level_01");
     }
 
@@ -39,8 +49,15 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(name);
         if (name.Contains("Level")) {
             current_level++;
+            //TODO remove this when done testing
+            if(current_level > levels.Length) {
+                current_level = 1;
+            }
             musicManager.Next();
         } else if (name.Contains("Start Menu") || name.Contains("Win") || name.Contains("Lose")) {
+            if(current_level != 0) {
+                ScoreManager.instance.Save();
+            }
             current_level = 0;
             if (!musicManager) {
                 musicManager = FindObjectOfType<FlexibleMusicManager>();
@@ -52,6 +69,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void QuitRequest() {
+        LoadLevel("Start Menu");
         Debug.Log("Quit requested");
         Application.Quit();
     }
