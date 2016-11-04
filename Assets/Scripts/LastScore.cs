@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Score : MonoBehaviour {
+public class LastScore : MonoBehaviour {
 
     private Text scoreText;
 
@@ -13,6 +13,6 @@ public class Score : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        scoreText.text = "Score: " + ScoreManager.instance.score.ToString();
+        scoreText.text = "Last Score: " + ScoreManager.instance.lastScore.ToString();
     }
 }

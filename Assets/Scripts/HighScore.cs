@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Score : MonoBehaviour {
+public class HighScore : MonoBehaviour {
 
     private Text scoreText;
 
@@ -13,6 +13,7 @@ public class Score : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        scoreText.text = "Score: " + ScoreManager.instance.score.ToString();
+        scoreText.text = "High Score: " + ScoreManager.instance.topScores[0].ToString();
+
     }
 }

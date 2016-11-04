@@ -25,6 +25,7 @@ public class ScoreManager : MonoBehaviour {
     public string persistanceTag = "HighScores";
 
     public void Reset() {
+        _lastScore = score;
         _score = 0;
     }
 
@@ -37,15 +38,16 @@ public class ScoreManager : MonoBehaviour {
     }
 
     public void Save() {
-        _lastScore = score;
         if (score > topScores[topScores.Count - 1]) {
             topScores[topScores.Count - 1] = score;
             topScores.Sort();
+            topScores.Reverse();
             PlayerPrefs.SetInt(persistanceTag + "." + "Count", topScores.Count);
             for (int i = 0; i < topScores.Count; i++) {
                 PlayerPrefs.SetInt(persistanceTag + "." + "score[" + i + "]", topScores[i]);
             }
         }
+        PlayerPrefs.SetInt(persistanceTag + "." + "LastScore", score);
     }
 
     void Start() {
@@ -61,6 +63,7 @@ public class ScoreManager : MonoBehaviour {
                 topScores.Add(PlayerPrefs.GetInt(persistanceTag + "." + "score[" + i + "]"));
             }
             topScores.Sort();
+            topScores.Reverse();
             return true;
         }
         return false;

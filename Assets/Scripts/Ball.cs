@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class Ball : MonoBehaviour {
+
+    public static int numBalls = 0;
+
     private GameObject paddle;
 
 
@@ -47,6 +50,12 @@ public class Ball : MonoBehaviour {
         rb.gravityScale = 0f;
     }
 
+
+
+    void OnApplicationQuit() {
+        ScoreManager.instance.Save();
+    }
+
     // Update is called once per frame
     void Update() {
 
@@ -62,7 +71,12 @@ public class Ball : MonoBehaviour {
                 if (inPlay) {
                     SoundFXManager.instance.play(1);
                     inPlay = false;
-                    Invoke("LoadLoseScreen", 1f);
+                    numBalls--;
+                    if (numBalls <= 0) {
+                        Invoke("LoadLoseScreen", 1f);
+                    } else {
+                        readyToPlay = true;
+                    }
                 }
             } else if (transform.position.y > top) {
                 rb.velocity = new Vector2(rb.velocity.x, -Mathf.Abs(rb.velocity.y));

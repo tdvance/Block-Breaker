@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour {
             backgrounds = Resources.LoadAll<Texture>("Backgrounds");
         }
 
-        if(levels == null) {
+        if (levels == null) {
             levels = Resources.LoadAll<Texture2D>("Levels");
         }
     }
@@ -44,18 +44,20 @@ public class LevelManager : MonoBehaviour {
         LoadLevel("Level_01");
     }
 
+
     public void LoadLevel(string name) {
         Debug.Log("New Level load: " + name);
         SceneManager.LoadScene(name);
         if (name.Contains("Level")) {
             current_level++;
             //TODO remove this when done testing
-            if(current_level > levels.Length) {
+            if (current_level > levels.Length) {
                 current_level = 1;
             }
             musicManager.Next();
         } else if (name.Contains("Start Menu") || name.Contains("Win") || name.Contains("Lose")) {
-            if(current_level != 0) {
+            Ball.numBalls = 3;
+            if (current_level != 0) {
                 ScoreManager.instance.Save();
             }
             current_level = 0;
@@ -74,7 +76,7 @@ public class LevelManager : MonoBehaviour {
         Application.Quit();
     }
 
-    
+
     private void SaveStatistics(string prefix) {
         StatisticsManager.instance.AddValue(Time.timeSinceLevelLoad, prefix + ".time");
     }

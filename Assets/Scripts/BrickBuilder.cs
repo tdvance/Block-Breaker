@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class BrickBuilder : MonoBehaviour {
     float left = -30;
     float right = 30;
-    float top = 17.5f;
+    float top = 15f;
     float bottom = -10f;
     float width = 4f;
-    float height = 1.28f;
+    float height = 1.28f*(25f/27.5f);
 
     int maxXCount = 16;
     int maxYCount = 22;

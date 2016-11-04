@@ -39,6 +39,20 @@ public class StatisticsManager : MonoBehaviour {
         PlayerPrefs.SetInt(countKey, count);
     }
 
+    public float GetQ1() {
+        return q1;
+    }
+
+    public float GetQ3() {
+        return q3;
+    }
+
+    public float GetMed() {
+        return med;
+    }
+
+    float mean, min, max, med, q1, q3;
+
     public void LogStats(string tag) {
         string countKey = prefix + "Count." + tag;
         int count = 0;
@@ -63,12 +77,12 @@ public class StatisticsManager : MonoBehaviour {
         }
         data.Sort();
 
-        Debug.Log("Mean(" + tag + ") = " + (sum / count));
-        Debug.Log(" Min(" + tag + ") = " + (data[0]));
-        Debug.Log(" Max(" + tag + ") = " + (data[count - 1]));
-        Debug.Log(" Med(" + tag + ") = " + (data[Quantile(count, 0.5f)]));
-        Debug.Log("  Q1(" + tag + ") = " + (data[Quantile(count, 0.25f)]));
-        Debug.Log("  Q3(" + tag + ") = " + (data[Quantile(count, 0.75f)]));
+        mean = sum / count;
+        min = data[0];
+        max = data[count - 1];
+        med = (data[Quantile(count, 0.5f)]);
+        q1 = (data[Quantile(count, 0.25f)]);
+        q3 = data[Quantile(count, 0.75f)];
     }
 
     private int Quantile(int count, float frac) {
