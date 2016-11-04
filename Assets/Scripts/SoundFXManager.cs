@@ -16,12 +16,14 @@ public class SoundFXManager : MonoBehaviour {
         audioSource.playOnAwake = false;
         audioSource.loop = false;
         audioSource.spatialBlend = 0f;
-        audioSource.volume = volume;
+        audioSource.volume = 1f;
     }
 
     public void play(int index) {
-        audioSource.PlayOneShot(clips[index]);
+        audioSource.PlayOneShot(clips[index], volume);
     }
+
+
 
     #region Singleton
     private static SoundFXManager _instance;
@@ -34,6 +36,8 @@ public class SoundFXManager : MonoBehaviour {
             return _instance;
         }
     }
+
+
 
     void Awake() {
         if (_instance != null && _instance != this) {
