@@ -10,8 +10,8 @@ public class Paddle : MonoBehaviour {
     public bool useMouse = true;
     public float paddleVelocity = 50f;
     public float mouseVelocity = 100f;
-    float left = -30;
-    float right = 30;
+    float left;
+    float right;
     Rigidbody2D rb;
 
     float dx;
@@ -20,12 +20,10 @@ public class Paddle : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        float widthMultiplier = (float)Screen.width / 1340f;
-        float heightMultiplier = (float)Screen.height / 754f;
-        left *= widthMultiplier;
-        right *= widthMultiplier;
-        transform.localScale = new Vector3(widthMultiplier, heightMultiplier, 1);
-       
+        left = LevelManager.instance.playSpaceLeft;
+        right = LevelManager.instance.playSpaceRight;
+
+        transform.localScale = new Vector3(LevelManager.instance.widthMultiplier, LevelManager.instance.heightMultiplier, 1);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -36,7 +34,8 @@ public class Paddle : MonoBehaviour {
     void Update() {
         if ((CrossPlatformInputManager.GetButtonDown("Fire1") || CrossPlatformInputManager.GetButtonDown("Jump")) && ball && !ball.IsInPlay()) {
             ball.Launch();
-        } if(autoPlay && !ball.IsInPlay()) {
+        }
+        if (autoPlay && !ball.IsInPlay()) {
             ball.Launch();
         }
         if (autoPlay) {

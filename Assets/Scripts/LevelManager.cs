@@ -4,6 +4,23 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
+
+
+    public float brickWidth = 4f;
+    public float brickHeight = 1.28f * (25f / 27.5f);
+    public int bricksPerRow = 16;
+    public int bricksPerColumn = 22;
+
+    public float playSpaceLeft = -30;
+    public float playSpaceRight = 30;
+    public float playSpaceTop = 15f;
+    public float playSpaceBottom = -10f;
+
+    internal float widthMultiplier;
+    internal float heightMultiplier;
+
+    internal Vector3 brickScale;
+
     FlexibleMusicManager musicManager;
 
     public int current_level = 0;
@@ -17,6 +34,20 @@ public class LevelManager : MonoBehaviour {
     float gameTime, q3Time, q1Time, medTime;
 
     void Start() {
+        //adjust for different screen sizes
+        widthMultiplier = (float)Screen.width / 1340f;
+        heightMultiplier = (float)Screen.height / 754f;
+
+        playSpaceLeft *= widthMultiplier;
+        playSpaceRight *= widthMultiplier;
+        playSpaceTop *= heightMultiplier;
+        playSpaceBottom *= heightMultiplier;
+        brickWidth *= widthMultiplier;
+        brickHeight *= heightMultiplier;
+
+        brickScale = new Vector3(widthMultiplier, heightMultiplier, 1);
+
+
         if (numBricks == 0) {
             numBricks = -1;
         }

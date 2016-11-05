@@ -13,10 +13,10 @@ public class Ball : MonoBehaviour {
 
     private Vector3 paddleToBallVector;
 
-    float left = -32;
-    float right = 32;
-    float top = 18;
-    float bottom = -18;
+    float left;
+    float right;
+    float top;
+    float bottom;
     float minXVelocity = -30;
     float maxXVelocity = 30;
     float minYVelocity = -20;
@@ -33,12 +33,10 @@ public class Ball : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        float widthMultiplier = (float)Screen.width / 1340f;
-        float heightMultiplier = (float)Screen.height / 754f;
-        left *= widthMultiplier;
-        right *= widthMultiplier;
-        top *= heightMultiplier;
-        bottom *= heightMultiplier;
+        left = LevelManager.instance.playSpaceLeft - 2 * LevelManager.instance.widthMultiplier;
+        right = LevelManager.instance.playSpaceRight + 2 * LevelManager.instance.widthMultiplier;
+        top = LevelManager.instance.playSpaceTop + 3 * LevelManager.instance.heightMultiplier;
+        bottom = LevelManager.instance.playSpaceBottom - 8 * LevelManager.instance.heightMultiplier;
 
         rb = GetComponent<Rigidbody2D>();
         paddle = GameObject.Find("Paddle");

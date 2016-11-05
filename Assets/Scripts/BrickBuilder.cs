@@ -3,39 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class BrickBuilder : MonoBehaviour {
-    float left = -30;
-    float right = 30;
-    float top = 15f;
-    float bottom = -10f;
-    float width = 4f;
-    float height = 1.28f*(25f/27.5f);
 
-    int maxXCount = 16;
-    int maxYCount = 22;
+
 
     public GameObject[] brickPrefabs;
 
     public List<Color> brickColors = new List<Color>();
 
-    public static float widthMultiplier;
-    public static float heightMultiplier;
-
-    Vector3 brickScale;
 
     // Use this for initialization
     void Start() {
-
-        widthMultiplier = (float)Screen.width / 1340f;
-        heightMultiplier = (float)Screen.height / 754f;
-
-        left *= widthMultiplier;
-        right *= widthMultiplier;
-        top *= heightMultiplier;
-        bottom *= heightMultiplier;
-        width *= widthMultiplier;
-        height *= heightMultiplier;
-
-        brickScale = new Vector3(widthMultiplier, heightMultiplier, 1);
 
         int level = LevelManager.instance.current_level;
         int iteration = (level + LevelManager.instance.levels.Length - 1) / LevelManager.instance.levels.Length;
@@ -47,10 +24,10 @@ public class BrickBuilder : MonoBehaviour {
 
     public int MakeBricks(Texture2D texture, int iteration) {
         int count = 0;
-        for (int i = 0; i < maxXCount; i++) {
-            for (int j = 0; j < maxYCount; j++) {
-                float x = left + i * width;
-                float y = bottom + j * height;
+        for (int i = 0; i < LevelManager.instance.bricksPerRow; i++) {
+            for (int j = 0; j < LevelManager.instance.bricksPerColumn; j++) {
+                float x = LevelManager.instance.playSpaceLeft + i * LevelManager.instance.brickWidth;
+                float y = LevelManager.instance.playSpaceBottom + j * LevelManager.instance.brickHeight;
                 Color c = texture.GetPixel(i, j);
                 if (c != Color.white) {
                     int type = (int)(c.a * 3.9);
@@ -115,10 +92,10 @@ public class BrickBuilder : MonoBehaviour {
 
     public void Fill() {
         int xcount = 0;
-        for (float x = left; x <= right; x += width) {
+        for (float x = LevelManager.instance.playSpaceLeft; x <= LevelManager.instance.playSpaceRight; x += LevelManager.instance.brickWidth) {
             xcount++;
             int ycount = 0;
-            for (float y = bottom; y <= top; y += height) {
+            for (float y = LevelManager.instance.playSpaceBottom; y <= LevelManager.instance.playSpaceTop; y += LevelManager.instance.brickHeight) {
                 ycount++;
                 MakeBrick(x, y);
             }
@@ -135,11 +112,7 @@ public class BrickBuilder : MonoBehaviour {
         GameObject brick = Instantiate(brickPrefabs[type], new Vector3(x, y, 0), Quaternion.identity) as GameObject;
         brick.transform.SetParent(gameObject.transform);
         brick.GetComponent<SpriteRenderer>().color = color;
-        //Debug.Log("before scale: " + brick.transform.localScale);
-        //Debug.Log("changing to: " + brickScale);
-
-        brick.transform.localScale = brickScale;
-        //Debug.Log("after scale: " + brick.transform.localScale);
+        brick.transform.localScale = LevelManager.instance.brickScale;
 
         return brick;
     }
