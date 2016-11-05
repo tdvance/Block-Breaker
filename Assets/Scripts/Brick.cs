@@ -69,7 +69,7 @@ public class Brick : MonoBehaviour {
         float q3Time = StatisticsManager.instance.GetQ3();
         float q1Time = StatisticsManager.instance.GetQ1();
         float medTime = StatisticsManager.instance.GetMed();
-        int bonus = ((int)((q3Time - time) / 10)) * 10 + 10;
+        int bonus = ((int)((q3Time - time) / 10)) * 50 + 10;
 
         Debug.Log("Time: " + time);
         Debug.Log("Ok: " + q3Time);
@@ -80,7 +80,7 @@ public class Brick : MonoBehaviour {
             return 0;
         }
 
-        int bonusAdder = ((int)((q1Time - time) / 10)) * 30 + 30;
+        int bonusAdder = ((int)((q1Time - time) / 10)) * 150 + 10;
         if (bonusAdder > 0) {
             bonus += bonusAdder;
         }

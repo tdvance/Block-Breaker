@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Ball : MonoBehaviour {
 
@@ -26,6 +27,7 @@ public class Ball : MonoBehaviour {
 
     private bool inPlay = false;
     private bool readyToPlay = false;
+    private bool nudging = false;
 
     Rigidbody2D rb;
 
@@ -54,6 +56,21 @@ public class Ball : MonoBehaviour {
 
     void OnApplicationQuit() {
         ScoreManager.instance.Save();
+    }
+
+    void FixedUpdate() {
+        if (inPlay && !nudging) {
+            if (CrossPlatformInputManager.GetButtonDown("Jump") || CrossPlatformInputManager.GetButtonDown("Fire1")) {
+                nudging = true;
+                rb.AddForce(new Vector2(10f,10f), ForceMode2D.Impulse);
+                Invoke("StopNudging", 3f);
+                Debug.Log("Nudge");
+            }
+        }
+    }
+
+    void StopNudging() {
+        nudging = false;
     }
 
     // Update is called once per frame
