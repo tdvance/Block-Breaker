@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour {
 
     public Texture2D[] levels = null;
 
+    float gameTime, q3Time, q1Time, medTime;
+
     void Start() {
         if (numBricks == 0) {
             numBricks = -1;
@@ -35,15 +37,19 @@ public class LevelManager : MonoBehaviour {
     public void LevelUp() {
         int bonus = ComputeBonus();
         ScoreManager.instance.Add(bonus);
-        if (bonus > 0) {
-            GameObject.Find("Bonus").GetComponent<Text>().text = "Time Bonus: " + bonus;
-        }
-        Debug.Log("Time Bonus: " + bonus);
+
+        gameTime = Mathf.Round(gameTime * 100) / 100;
+        medTime = Mathf.Round(medTime * 100) / 100;
+        GameObject.Find("Bonus").GetComponent<Text>().text =
+              "\n      Time: " + gameTime
+            + "\n       Par: " + medTime
+            + "\n<color=green>Time Bonus: " + bonus + "</color>";
+
         FindObjectOfType<Ball>().Stop();
         SoundFXManager.instance.play(0);
         StatisticsManager.instance.AddValue(Time.timeSinceLevelLoad, "Level_" + LevelManager.instance.current_level + ".time");
         StatisticsManager.instance.LogStats("Level_" + LevelManager.instance.current_level + ".time");
-        Invoke("StartNextLevel", 1f);
+        Invoke("StartNextLevel", 3f);
     }
 
     void StartNextLevel() {
@@ -83,15 +89,15 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    int ComputeBonus() {
-        float time = Time.timeSinceLevelLoad;
-        StatisticsManager.instance.LogStats("Level_" + LevelManager.instance.current_level + ".time");
-        float q3Time = StatisticsManager.instance.GetQ3();
-        float q1Time = StatisticsManager.instance.GetQ1();
-        float medTime = StatisticsManager.instance.GetMed();
-        int bonus = ((int)((q3Time - time) / 10)) * 50 + 10;
 
-        Debug.Log("Time: " + time);
+    int ComputeBonus() {
+        gameTime = Time.timeSinceLevelLoad;
+        StatisticsManager.instance.LogStats("Level_" + LevelManager.instance.current_level + ".time");
+        q3Time = StatisticsManager.instance.GetQ3();
+        q1Time = StatisticsManager.instance.GetQ1();
+        medTime = StatisticsManager.instance.GetMed();
+        int bonus = ((int)((q3Time - gameTime) / 10)) * 50 + 10;
+
         Debug.Log("Ok: " + q3Time);
         Debug.Log("Par:" + medTime);
         Debug.Log("Good: " + q1Time);
@@ -100,7 +106,7 @@ public class LevelManager : MonoBehaviour {
             return 0;
         }
 
-        int bonusAdder = ((int)((q1Time - time) / 10)) * 150 + 10;
+        int bonusAdder = ((int)((q1Time - gameTime) / 10)) * 150 + 10;
         if (bonusAdder > 0) {
             bonus += bonusAdder;
         }
