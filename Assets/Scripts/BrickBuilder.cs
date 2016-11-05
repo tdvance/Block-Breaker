@@ -37,10 +37,10 @@ public class BrickBuilder : MonoBehaviour {
 
         brickScale = new Vector3(widthMultiplier, heightMultiplier, 1);
 
-        int level = LevelManager.current_level;
-        int iteration = (level + LevelManager.levels.Length - 1) / LevelManager.levels.Length;
-        Texture2D texture = LevelManager.levels[(level + LevelManager.levels.Length - 1) % LevelManager.levels.Length];
-        LevelManager.numBricks = MakeBricks(texture, iteration);
+        int level = LevelManager.instance.current_level;
+        int iteration = (level + LevelManager.instance.levels.Length - 1) / LevelManager.instance.levels.Length;
+        Texture2D texture = LevelManager.instance.levels[(level + LevelManager.instance.levels.Length - 1) % LevelManager.instance.levels.Length];
+        LevelManager.instance.numBricks = MakeBricks(texture, iteration);
 
 
     }

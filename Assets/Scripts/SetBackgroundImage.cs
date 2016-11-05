@@ -8,8 +8,8 @@ public class SetBackgroundImage : MonoBehaviour {
     // Use this for initialization
     void Start() {
     
-        int level = LevelManager.current_level;
-        Texture[] backgrounds = LevelManager.backgrounds;
+        int level = LevelManager.instance.current_level;
+        Texture[] backgrounds = LevelManager.instance.backgrounds;
         Debug.Log("Current Level:  " + level);
         if (level > 0 && level - 1 < backgrounds.Length) {
             GetComponent<RawImage>().texture = backgrounds[level - 1];

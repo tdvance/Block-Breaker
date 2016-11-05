@@ -5,7 +5,7 @@ public class Init : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<LevelManager>().LoadLevel("Start Menu");
+        LevelManager.instance.LoadLevel("Start Menu");
 	}
 	
 	// Update is called once per frame

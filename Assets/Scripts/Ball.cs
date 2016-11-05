@@ -62,7 +62,7 @@ public class Ball : MonoBehaviour {
         if (inPlay && !nudging) {
             if (CrossPlatformInputManager.GetButtonDown("Jump") || CrossPlatformInputManager.GetButtonDown("Fire1")) {
                 nudging = true;
-                rb.AddForce(new Vector2(10f,10f), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(10f, 10f), ForceMode2D.Impulse);
                 Invoke("StopNudging", 3f);
                 Debug.Log("Nudge");
             }
@@ -122,7 +122,7 @@ public class Ball : MonoBehaviour {
     }
 
     void LoadLoseScreen() {
-        FindObjectOfType<LevelManager>().LoadLevel("Lose Screen");
+        LevelManager.instance.GameOver();
     }
 
     public void Launch() {

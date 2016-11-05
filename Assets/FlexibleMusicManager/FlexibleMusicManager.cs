@@ -343,6 +343,12 @@ public class FlexibleMusicManager : MonoBehaviour {
         }
     }
 
+    public void ChangeTrack(int i) {
+        Pause();
+        SetTrack(i);
+        Play();
+    }
+
     /// <summary>
     /// Go back to previous song on playlist
     /// </summary>

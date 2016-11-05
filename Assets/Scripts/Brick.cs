@@ -34,7 +34,7 @@ public class Brick : MonoBehaviour {
                 Color c = GetComponent<SpriteRenderer>().color;
                 c = new Color(c.r * 0.5f, c.g * 0.5f, c.b * 0.5f, c.a * 0.25f);
                 smoke.GetComponent<ParticleSystem>().startColor = c;
-                LevelManager.numBricks--;
+                LevelManager.instance.numBricks--;
 
                 ScoreManager.instance.Add(10);
 
@@ -46,15 +46,8 @@ public class Brick : MonoBehaviour {
                     }
                 }
 
-                if (LevelManager.numBricks <= 0) {
-                    int bonus = ComputeBonus();
-                    ScoreManager.instance.Add(bonus);
-                    if (bonus > 0) {
-                        GameObject.Find("Bonus").GetComponent<Text>().text = "Time Bonus: " + bonus;
-                    }
-                    Debug.Log("Time Bonus: " + bonus);
-                    FindObjectOfType<Ball>().Stop();
-                    FindObjectOfType<LevelManager>().LevelUp();
+                if (LevelManager.instance.numBricks <= 0) {
+                    LevelManager.instance.LevelUp();
                 }
                 Destroy(gameObject);
             } else {
@@ -63,27 +56,5 @@ public class Brick : MonoBehaviour {
         }
     }
 
-    int ComputeBonus() {
-        float time = Time.timeSinceLevelLoad;
-        StatisticsManager.instance.LogStats("Level_" + LevelManager.current_level + ".time");
-        float q3Time = StatisticsManager.instance.GetQ3();
-        float q1Time = StatisticsManager.instance.GetQ1();
-        float medTime = StatisticsManager.instance.GetMed();
-        int bonus = ((int)((q3Time - time) / 10)) * 50 + 10;
-
-        Debug.Log("Time: " + time);
-        Debug.Log("Ok: " + q3Time);
-        Debug.Log("Par:" + medTime);
-        Debug.Log("Good: " + q1Time);
-
-        if (bonus < 0) {
-            return 0;
-        }
-
-        int bonusAdder = ((int)((q1Time - time) / 10)) * 150 + 10;
-        if (bonusAdder > 0) {
-            bonus += bonusAdder;
-        }
-        return bonus;
-    }
+   
 }
