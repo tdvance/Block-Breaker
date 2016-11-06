@@ -27,7 +27,9 @@ public class Brick : MonoBehaviour {
         if (collision.gameObject.GetComponent<Ball>()) {
             timesHit++;
             if (timesHit >= maxHits) {
-                SoundFXManager.instance.play(3);
+                //destroy brick in a puff of smoke
+
+                SoundFXManager.instance.play(3);// glass break sound
                 GameObject smoke = Instantiate<GameObject>(smokePrefab);
                 Destroy(smoke, 5f);
                 smoke.transform.position = transform.position;
@@ -35,10 +37,10 @@ public class Brick : MonoBehaviour {
                 c = new Color(c.r * 0.5f, c.g * 0.5f, c.b * 0.5f, c.a * 0.25f);
                 smoke.GetComponent<ParticleSystem>().startColor = c;
                 LevelManager.instance.numBricks--;
-
+                
+                //score!
                 ScoreManager.instance.Add(10);
-
-
+                
                 if (timesHit > 1) {
                     ScoreManager.instance.Add(20);
                     if (timesHit > 2) {
@@ -46,9 +48,11 @@ public class Brick : MonoBehaviour {
                     }
                 }
 
+                //No more bricks
                 if (LevelManager.instance.numBricks <= 0) {
                     LevelManager.instance.LevelUp();
                 }
+
                 Destroy(gameObject);
             } else {
                 GetComponent<SpriteRenderer>().sprite = hitSprites[timesHit];

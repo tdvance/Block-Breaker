@@ -14,6 +14,5 @@ public class HighScore : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         scoreText.text = "High Score: " + ScoreManager.instance.topScores[0].ToString();
-
     }
 }

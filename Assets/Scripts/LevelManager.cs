@@ -35,8 +35,8 @@ public class LevelManager : MonoBehaviour {
 
     void Start() {
         //adjust for different screen sizes
-        widthMultiplier = (float)Screen.width / 1340f;
-        heightMultiplier = (float)Screen.height / 754f;
+        widthMultiplier =  (float)Screen.width / 1340f / (float)Screen.height * 754f;
+        heightMultiplier = 1;
 
         playSpaceLeft *= widthMultiplier;
         playSpaceRight *= widthMultiplier;
