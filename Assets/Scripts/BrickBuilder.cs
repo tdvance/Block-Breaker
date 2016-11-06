@@ -10,16 +10,23 @@ public class BrickBuilder : MonoBehaviour {
 
     public List<Color> brickColors = new List<Color>();
 
+    private string levelName = "None";
 
     // Use this for initialization
     void Start() {
 
         int level = LevelManager.instance.current_level;
         int iteration = (level + LevelManager.instance.levels.Length - 1) / LevelManager.instance.levels.Length;
-        Texture2D texture = LevelManager.instance.levels[(level + LevelManager.instance.levels.Length - 1) % LevelManager.instance.levels.Length];
+        int textureNum = (level + LevelManager.instance.levels.Length - 1) % LevelManager.instance.levels.Length;
+        Texture2D texture = LevelManager.instance.levels[textureNum];
+        levelName = texture.name;
         LevelManager.instance.numBricks = MakeBricks(texture, iteration);
 
 
+    }
+
+    public string GetLevelName() {
+        return levelName;
     }
 
     public int MakeBricks(Texture2D texture, int iteration) {
@@ -108,7 +115,6 @@ public class BrickBuilder : MonoBehaviour {
     }
 
     public GameObject MakeBrick(float x, float y, Color color, int type) {
-        //Debug.Log("Making brick: " + color + ", " + type);
         GameObject brick = Instantiate(brickPrefabs[type], new Vector3(x, y, 0), Quaternion.identity) as GameObject;
         brick.transform.SetParent(gameObject.transform);
         brick.GetComponent<SpriteRenderer>().color = color;

@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour {
 
     void Start() {
         //adjust for different screen sizes
-        widthMultiplier =  (float)Screen.width / 1340f / (float)Screen.height * 754f;
+        widthMultiplier = (float)Screen.width / 1340f / (float)Screen.height * 754f;
         heightMultiplier = 1;
 
         playSpaceLeft *= widthMultiplier;
@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour {
         brickWidth *= widthMultiplier;
         brickHeight *= heightMultiplier;
 
-        brickScale = new Vector3(widthMultiplier, heightMultiplier, 1);
+        brickScale = new Vector3(widthMultiplier, heightMultiplier * .9f, 1);
 
 
         if (numBricks == 0) {
@@ -54,6 +54,11 @@ public class LevelManager : MonoBehaviour {
         musicManager = FindObjectOfType<FlexibleMusicManager>();
         backgrounds = Resources.LoadAll<Texture>("Backgrounds");
         levels = Resources.LoadAll<Texture2D>("Levels");
+
+        //for (int i = 1; i <= 19; i++) {
+        //    string tag = "Level_" + i + ".time";
+        //    StatisticsManager.instance.LogStats(tag);
+        //}
     }
 
     public void LoadGameLevel(float time) {
@@ -71,10 +76,11 @@ public class LevelManager : MonoBehaviour {
 
         gameTime = Mathf.Round(gameTime * 100) / 100;
         medTime = Mathf.Round(medTime * 100) / 100;
-        GameObject.Find("Bonus").GetComponent<Text>().text =
-              "\n      Time: " + gameTime
+        GameObject.Find("Bonus").GetComponent<Text>().text = "\n<color=darkgreen>"
+            + "\n     Level: " + FindObjectOfType<BrickBuilder>().GetLevelName()
+            + "\n      Time: " + gameTime
             + "\n       Par: " + medTime
-            + "\n<color=green>Time Bonus: " + bonus + "</color>";
+            + "\n</color><color=yellow>Time Bonus: " + bonus + "</color>";
 
         FindObjectOfType<Ball>().Stop();
         SoundFXManager.instance.play(0);

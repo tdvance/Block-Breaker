@@ -83,7 +83,13 @@ public class StatisticsManager : MonoBehaviour {
         med = (data[Quantile(count, 0.5f)]);
         q1 = (data[Quantile(count, 0.25f)]);
         q3 = data[Quantile(count, 0.75f)];
+        Debug.Log(tag + " q1: " + q1);
+        Debug.Log(tag + " q2: " + med);
+        Debug.Log(tag + " q3: " + q3);
     }
+
+
+
 
     private int Quantile(int count, float frac) {
         return (int)Mathf.Ceil(frac * (count - 1));
