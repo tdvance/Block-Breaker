@@ -7,7 +7,6 @@ public class Paddle : MonoBehaviour {
     public bool autoPlay = false;
     public float autoPlayFudge = 0.5f;
 
-    public bool useMouse = true;
     public float paddleVelocity = 50f;
     public float mouseVelocity = 100f;
     float left;
@@ -40,7 +39,7 @@ public class Paddle : MonoBehaviour {
         }
         if (autoPlay) {
             ProcessAutoInput();
-        } else if (useMouse) {
+        } else if (UseMouseToggle.useMouse) {
             ProcessMouseInput();
         } else {
             ProcessOtherInput();

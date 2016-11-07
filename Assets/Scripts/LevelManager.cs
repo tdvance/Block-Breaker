@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour {
     float gameTime, q3Time, q1Time, medTime;
 
     void Start() {
+        Ball.nextAdditionalBallScore = 10000;
         //adjust for different screen sizes
         widthMultiplier = (float)Screen.width / 1340f / (float)Screen.height * 754f;
         heightMultiplier = 1;

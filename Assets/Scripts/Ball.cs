@@ -29,6 +29,8 @@ public class Ball : MonoBehaviour {
     private bool readyToPlay = false;
     private bool nudging = false;
 
+    public static int nextAdditionalBallScore = 10000;
+
     Rigidbody2D rb;
 
     // Use this for initialization
@@ -71,10 +73,28 @@ public class Ball : MonoBehaviour {
         nudging = false;
     }
 
+    void AdditionalBall() {
+        SoundFXManager.instance.play(4);
+        numBalls++;
+        if (nextAdditionalBallScore < 25000) {
+            nextAdditionalBallScore = 25000;
+        }else if (nextAdditionalBallScore < 50000) {
+            nextAdditionalBallScore = 50000;
+        }else if(nextAdditionalBallScore < 100000) {
+            nextAdditionalBallScore = 100000;
+        } else {
+            nextAdditionalBallScore *= 2;
+        }
+    }
+
     // Update is called once per frame
     void Update() {
 
         if (inPlay) {
+            if(ScoreManager.instance.score >= nextAdditionalBallScore) {
+                AdditionalBall();
+            }
+
             if (rb.velocity.magnitude < minVelocityMag) {
                 rb.velocity *= 1.5f;
             } else if (rb.velocity.x < minXMag && rb.velocity.x > -minXMag) {

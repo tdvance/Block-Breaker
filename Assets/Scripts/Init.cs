@@ -11,6 +11,9 @@ public class Init : MonoBehaviour {
         if (PlayerPrefs.HasKey("SFXVolume")) {
             SoundFXManager.instance.volume = PlayerPrefs.GetFloat("SFXVolume");
         }
+        if (PlayerPrefs.HasKey("UseMouse")) {
+            UseMouseToggle.useMouse = (0 != PlayerPrefs.GetInt("UseMouse"));
+        }
         LevelManager.instance.StartMenu();
     }
 
