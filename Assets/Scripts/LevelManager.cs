@@ -77,6 +77,7 @@ public class LevelManager : MonoBehaviour {
 
         gameTime = Mathf.Round(gameTime * 100) / 100;
         medTime = Mathf.Round(medTime * 100) / 100;
+        GameObject.Find("BonusBackground").GetComponent<Image>().color = new Color(.1f, .1f, .1f, .8f);
         GameObject.Find("Bonus").GetComponent<Text>().text = "\n<color=darkgreen>"
             + "\n     Level: " + FindObjectOfType<BrickBuilder>().GetLevelName()
             + "\n      Time: " + gameTime
