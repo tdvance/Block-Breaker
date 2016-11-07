@@ -1,5 +1,5 @@
 
-###Buster!
+#Buster!
 
 ## Bust a brick or 50
 
@@ -33,6 +33,9 @@ The new (November 2016) Version 1.0 has the following features:
 
 + Levels/backgrounds/songs cycle for neverending play
 
++ Levels ordered according to how long autoplay took to finsish them
+(75th percentile times).
+
 + 15 colors of bricks, four types (1 hit, 2 hit, 3 hit, and unbreakable)
 
 + Options menu to change music volume, sound effects volume, and to
@@ -52,4 +55,6 @@ saved between runs.
 
 + 3 plays per "quarter", additional bonus plays at various score
 levels, starting with 10,000 points.
+
++ See development progress at https://github.com/tdvance/Block-Breaker/commits/master
 
