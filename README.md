@@ -21,6 +21,8 @@ quarters....
 
 This game was a class project for the Udemy course at https://www.udemy.com/unitycourse.
 
+###Features
+
 The new (November 2016) Version 1.0 has the following features:
 
 + Destroy bricks in a puff of colored smoke
@@ -57,4 +59,28 @@ saved between runs.
 levels, starting with 10,000 points.
 
 + See development progress at https://github.com/tdvance/Block-Breaker/commits/master
+
+
+###To play:
+
+Use Options menu to adjust music and SFX volumes and to use mouse
+versus keyboard (mouse is strongly recommended).
+
+####Mouse 
+
+move mouse pointer to set left-right position of paddle.  Click 
+to launch ball and, during play, to nudge the ball.
+
+
+####Gamepad/Joystick
+
+Use the "mouse" mode.  axis moves paddle, fire button for launch or nudge.
+
+####Keyboard
+
++ move paddle left: A or left arrow
++ move paddle right: D or right arrow
++ launch or nudge: space bar or left ctrl
++ move paddle faster or slower: hold down alt or shift
+
 

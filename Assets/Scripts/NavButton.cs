@@ -32,11 +32,4 @@ public class NavButton : MonoBehaviour {
 
     }
 
-    private void SaveStatistics(string prefix) {
-        StatisticsManager.instance.AddValue(Time.timeSinceLevelLoad, prefix + ".time");
-    }
-
-
-
-
 }

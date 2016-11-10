@@ -80,24 +80,30 @@ public class LevelManager : MonoBehaviour {
         GameObject.Find("BonusBackground").GetComponent<Image>().color = new Color(.1f, .1f, .1f, .8f);
         GameObject.Find("Bonus").GetComponent<Text>().text = "\n<color=darkgreen>"
             + "\n     Level: " + FindObjectOfType<BrickBuilder>().GetLevelName()
-            + "\n      Time: " + gameTime
-            + "\n       Par: " + medTime
+            + "\n      Time: " + formatTime(gameTime)
+            + "\n       Par: " + formatTime(medTime)
             + "\n</color><color=yellow>Time Bonus: " + bonus + "</color>";
 
         FindObjectOfType<Ball>().Stop();
         SoundFXManager.instance.play(0);
-        StatisticsManager.instance.AddValue(Time.timeSinceLevelLoad, "Level_" + LevelManager.instance.current_level + ".time");
-        StatisticsManager.instance.LogStats("Level_" + LevelManager.instance.current_level + ".time");
+        //StatisticsManager.instance.AddValue(Time.timeSinceLevelLoad, "Level_" + LevelManager.instance.current_level + ".time");
+        //StatisticsManager.instance.LogStats("Level_" + LevelManager.instance.current_level + ".time");
         Invoke("StartNextLevel", 3f);
+    }
+
+    string formatTime(float time) {
+        float seconds = Mathf.Floor((time % 60f) * 10f) / 10f;
+        float minutes = Mathf.Floor(time / 60f);
+        if (seconds >= 10) {
+            return "" + minutes + ":" + seconds;
+        } else {
+            return "" + minutes + ":0" + seconds;
+        }
     }
 
     void StartNextLevel() {
         SceneManager.LoadScene("GameLevel");
         current_level++;
-        //TODO remove this when done testing
-        if (current_level > levels.Length) {
-            current_level = 1;
-        }
         musicManager.Next();
     }
 
@@ -131,15 +137,19 @@ public class LevelManager : MonoBehaviour {
 
     int ComputeBonus() {
         gameTime = Time.timeSinceLevelLoad;
-        StatisticsManager.instance.LogStats("Level_" + LevelManager.instance.current_level + ".time");
-        q3Time = StatisticsManager.instance.GetQ3();
-        q1Time = StatisticsManager.instance.GetQ1();
-        medTime = StatisticsManager.instance.GetMed();
+        //StatisticsManager.instance.LogStats("Level_" + LevelManager.instance.current_level + ".time");
+        int level = LevelManager.instance.current_level;
+        while (level > 19) {
+            level -= 19;
+        }
+        q3Time = Times.q3[level];
+        q1Time = Times.q1[level];
+        medTime = Times.q2[level];
         int bonus = ((int)((q3Time - gameTime) / 10)) * 50 + 10;
 
-        Debug.Log("Ok: " + q3Time);
-        Debug.Log("Par:" + medTime);
-        Debug.Log("Good: " + q1Time);
+        //Debug.Log("Ok: " + q3Time);
+        //Debug.Log("Par:" + medTime);
+        //Debug.Log("Good: " + q1Time);
 
         if (bonus < 0) {
             return 0;

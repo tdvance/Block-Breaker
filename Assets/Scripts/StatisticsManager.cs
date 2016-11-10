@@ -51,7 +51,7 @@ public class StatisticsManager : MonoBehaviour {
         return med;
     }
 
-    float mean, min, max, med, q1, q3;
+    float  med, q1, q3;
 
     public void LogStats(string tag) {
         string countKey = prefix + "Count." + tag;
@@ -77,9 +77,9 @@ public class StatisticsManager : MonoBehaviour {
         }
         data.Sort();
 
-        mean = sum / count;
-        min = data[0];
-        max = data[count - 1];
+        //mean = sum / count;
+        //min = data[0];
+        //max = data[count - 1];
         med = (data[Quantile(count, 0.5f)]);
         q1 = (data[Quantile(count, 0.25f)]);
         q3 = data[Quantile(count, 0.75f)];
