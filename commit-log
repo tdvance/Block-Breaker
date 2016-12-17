@@ -1,0 +1,165 @@
+    Initial Commit
+
+Date:   Sun Oct 30 16:10:44 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit aeb16edcc541530f36f035611105e6b446cd2f0e
+
+    Add paddle and some physics, limit velocity, adjust collider for paddle
+
+Date:   Sun Oct 30 23:17:10 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit a59375aaafa06e21ff9474d5e6e5ea0992e32474
+
+    Paddle movement
+
+Date:   Mon Oct 31 10:01:56 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit e384571bb84d966be4bb0937e3d88283ffdd336b
+
+    tweak background image choice
+    tweak motion
+    Launch ball with fire/jump command
+
+Date:   Mon Oct 31 13:55:27 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit bba9d4926a8d656826a51d4f4489c74f0b87897d
+
+    velocities tweaked to prevent overly fast or slow ball
+    two levels built
+    Multiple brick types
+
+Date:   Mon Oct 31 22:57:42 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit ddc2439f806254ca447d1561a8a576f1b2dd7c70
+
+    added autoplay capability for testing
+    used times stats to order levels by difficulty
+    added statistics manager to keep track of quartiles of time per level on autoplay
+    fixed boring game loops by keeping x and y components of ball velocity >= 5
+    Adjusted skybox color
+    Fixed transparent brick issue  using worldspace UI canvas
+    added damaged bricks
+    Consolidated bricks to sprite sheets
+
+Date:   Tue Nov 1 21:49:18 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit 8a34f7e08e8352594f25a30b841b7b1c64d37dc9
+
+    Improve color detection in texture-to-level builder
+    New level2
+    Fixed scaling issue for strange aspect ratios
+
+Date:   Wed Nov 2 10:26:56 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit e43e74244cef53fa7a822e92de0fdd5a66ca38fc
+
+    Added sound effects
+
+Date:   Wed Nov 2 11:11:07 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit 92c8fbeccb9dfe922fe8f66788223fde18596030
+
+    delay between levels
+    begin high score tracking
+    more levels
+    Lose/win sounds
+    Smoke on destroyed brick
+    Score display
+
+Date:   Thu Nov 3 17:44:58 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit b0c1d188b05487d358a6483715cbad93cea90d2d
+
+    bonus for finishing early, currently on still-being-computed stats
+    update high score on application exit
+    3 lives for a "quarter"
+    high score tracking and display
+    score display on various screens
+    more levels
+
+Date:   Thu Nov 3 21:11:11 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit 45a3ac865c50c13bbb8f4a824a759d59ec4fd9c3
+
+    tweak button images
+    tweak volumes
+    more levels
+    exit button in game
+    music/sfx volume adjustable
+    Options screen works
+
+Date:   Fri Nov 4 15:33:44 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit ca52dc514f0f62430a7b59491a11b4f9c7c8012d
+
+    now can nudge the ball in game with mouse click or space bar
+    Increase time bonus
+
+Date:   Sat Nov 5 09:23:59 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit 926ff93edfdb75d93591f2ce1758e2800909ed93
+
+    Made level manager a singleton
+
+Date:   Sat Nov 5 13:24:29 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit 1e1bf87721abae9093d0e21467358db7b06a65e9
+
+    3 more levels
+    adjusted levels impinging on score display
+    par time and best time now shown with time bonus
+
+Date:   Sat Nov 5 15:55:00 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit b208ad0264d8b515926645ef2ef160a3ee603dd9
+
+    Move screen space parameters to one file (LevelManager)
+    Ensure fits on 4:3 aspect ratio
+
+Date:   Sat Nov 5 17:23:24 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit 13939ce2726b283a22974f70ca7dcbd7d612cec6
+
+    Make sfx volume and music volume settings persistant
+    Fix scaling bug when maximized
+
+Date:   Sat Nov 5 22:11:26 2016 -0400
+Author: tdvance <tdvance@gmail.com>
+commit 3e1fc2936674260260c323cdfad924dfc8ef6815
+
+    reordered levels according to measured time needed to complete them (sorted by 75 percentile times as computed by StatisticsManager)
+    adjusted brick aspect ratio
+    make sure bricks don't obscure end of level info
+    show level name at end of level
+    Adjusted score so it was on screen on various aspect ratios
+
+Date:   Sun Nov 6 17:18:15 2016 -0500
+Author: tdvance <tdvance@gmail.com>
+commit 950c0007ea2585a5afeb86c9a0f2d35588f7fa47
+
+    README file
+    bonus balls for high scores
+    Keyboard/mouse setup for PC version
+
+Date:   Sun Nov 6 21:59:17 2016 -0500
+Author: tdvance <tdvance@gmail.com>
+commit 1af07afcfaca9d7502476719a013fcdd7ad30a86
+
+    Minor edits
+
+Date:   Mon Nov 7 09:36:38 2016 -0500
+Author: tdvance <tdvance@gmail.com>
+commit 67d0714074edd0fe3611799b503f2b49f4959a3d
+
+    Added dark background behind bonus text for readibility
+    Changed in-game title to Buster!
+
+Date:   Mon Nov 7 13:35:30 2016 -0500
+Author: tdvance <tdvance@gmail.com>
+commit f897281cb891db3f47c83e610514234fce7171c4
+
+    Release
+
+Date:   Thu Nov 10 15:52:41 2016 -0500
+Author: tdvance <tdvance@gmail.com>
+commit 0dd0fa5dea51995f982c50a7ca06cdb762da277f
